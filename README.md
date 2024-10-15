@@ -3,6 +3,8 @@
 
 ## Setup
 
+> Ensure you have both Node.js and npm installed on your machine.
+
 ```
 cd magic-wand
 npm install
