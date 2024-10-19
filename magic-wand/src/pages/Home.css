@@ -1,0 +1,64 @@
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+:root{
+    background-color: #bceced;
+    /* background-color: black; */
+    font-family: "MedievalSharp", cursive;
+    
+}
+
+.title {
+    text-align: center; 
+    font-family: "MedievalSharp", cursive;
+    font-size: 3rem; 
+    line-height: 1; 
+    padding: 20px;
+  }
+  
+.line {
+    margin: 0; 
+    font-weight: bold; 
+    letter-spacing: 2px; 
+}
+
+.line:nth-child(1){
+    font-size: 4rem;
+}
+
+  
+.line:nth-child(2) {
+    font-size: 2rem;
+    padding-right: 45px;
+    margin-bottom: 10px; 
+}
+.line:nth-child(3){
+    padding-left: 45px;
+}
+  
+
+
+
+
+.body{
+
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../images/backgroundImage.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left bottom;
+    background-size: contain;
+
+}
+
+.edit{
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../images/second.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left;
+    background-size: contain;
+
+}

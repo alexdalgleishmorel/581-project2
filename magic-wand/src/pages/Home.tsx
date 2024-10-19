@@ -2,23 +2,23 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
 
+
 const Home: React.FC = () => {
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer />
-      </IonContent>
-    </IonPage>
+    <body>
+      <div className="title">
+        <p className="line">Make</p>
+        <p className="line">A</p>
+        <p className="line">Wish</p>
+      </div>
+
+      
+      <div className='body'>
+        {/* Functionality to detect the sensors */}
+      </div>
+
+
+    </body>
   );
 };
 
