@@ -1,5 +1,7 @@
 import './Home.css';
 import {Link} from "react-router-dom";
+import {IonButton} from '@ionic/react';
+
 
 
 
@@ -17,10 +19,13 @@ const Edit: React.FC = () => {
             {/* <Link to="/"><button>
                 Edit Gesture
             </button></Link> */}
+            <Link to="/editGesture" style={{ textDecoration: 'none' }}>
+                <IonButton>Edit Gesture</IonButton>
+            </Link>
             
-            <button>
-                Edit Sound
-            </button>
+            <Link to="/editSound" style={{ textDecoration: 'none' }}>
+                <IonButton>Edit Sound  </IonButton>
+            </Link>
         
         </div>
 

@@ -3,6 +3,8 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import Edit from './pages/Edit';
+import EditSound from './pages/editSound';
+import EditGesture from './pages/editGesture';
 
 
 
@@ -48,10 +50,17 @@ const App: React.FC = () => (
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
-        {/* <Route exact path="/edit">
+        <Route exact path="/edit">
           <Edit/>
+        </Route>
+        <Route exact path="/editGesture">
+          <EditGesture/>
+        </Route>
 
-        </Route> */}
+        <Route exact path="/editSound">
+          <EditSound/>
+        </Route>
+
         
       </IonRouterOutlet>
     </IonReactRouter>

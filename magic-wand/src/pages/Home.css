@@ -2,8 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
 
 :root{
-    background-color: #bceced;
-    /* background-color: black; */
+    /* background-color: #bceced; */
+    background-image: url("../images/4e095cf3f90103d7455d1ed96febeb45.jpg");
     font-family: "MedievalSharp", cursive;
     
 }
@@ -11,20 +11,24 @@
 .title {
     text-align: center; 
     font-family: "MedievalSharp", cursive;
+    color: #ffebcd;
+    
     font-size: 3rem; 
     line-height: 1; 
-    padding: 20px;
+    padding-top: 90px;
   }
   
 .line {
     margin: 0; 
     font-weight: bold; 
     letter-spacing: 2px; 
+    font-size: 7rem;
+    text-shadow: 5px 15px 5px black;
 }
 
-.line:nth-child(1){
+/* .line:nth-child(1){
     font-size: 4rem;
-}
+} */
 
   
 .line:nth-child(2) {
@@ -44,21 +48,29 @@
 
     height: 100vh;
     width: 100vw;
-    background-image: url("../images/backgroundImage.png");
+    background-image: url("../images/magic-wand-just-beyond.gif");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: left bottom;
     background-size: contain;
 
 }
-
 .edit{
-    height: 100vh;
-    width: 100vw;
-    background-image: url("../images/second.png");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: left;
-    background-size: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-direction: column;
+    padding-top: 90px;
+}
+ion-button{
+    --background:#ffebcd;
+    --color:black;
+    font-size:30px;
+    --padding-top: 15px;
+    --padding-bottom: 15px;
+
+    
+    
 
 }
