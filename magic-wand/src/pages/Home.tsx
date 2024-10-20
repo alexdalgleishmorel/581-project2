@@ -1,5 +1,5 @@
-import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+
+import { IonButton } from '@ionic/react';
 import './Home.css';
 import { Link } from 'react-router-dom';
 
@@ -22,8 +22,6 @@ const Home: React.FC = () => {
       <div className='body'>
         {/* Functionality to detect the sensors */}
       </div>
-
-
     </div>
   );
 };
