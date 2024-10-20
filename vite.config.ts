@@ -6,6 +6,7 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/581-project2/',
   plugins: [
     react(),
     legacy()
