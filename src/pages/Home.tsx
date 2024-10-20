@@ -115,7 +115,7 @@ const Home: React.FC = () => {
         {!isInSequenceDetectionState && (
           <>
             <IonButton onClick={waitForSound}>Unlock</IonButton>
-            <Link to="/edit" style={{ textDecoration: 'none' }}>
+            <Link to="/581-project2/edit" style={{ textDecoration: 'none' }}>
               <IonButton>Edit</IonButton>
             </Link>
           </>

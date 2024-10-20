@@ -12,7 +12,7 @@ const editGesture: React.FC = () => {
     return(
         <div>
             <div>
-                <Link to="/edit">
+                <Link to="/581-project2/edit">
                     <img src={Back} width={50} height={50} className="back"/>    
                 </Link>
                 <div className='edit-page-content'>

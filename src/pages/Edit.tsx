@@ -13,15 +13,15 @@ const Edit: React.FC = () => {
         </div>
 
         <div className='edit'>
-            <Link to="/editGesture" style={{ textDecoration: 'none' }}>
+            <Link to="/581-project2/editGesture" style={{ textDecoration: 'none' }}>
                 <IonButton>Edit Gesture</IonButton>
             </Link>
             
-            <Link to="/editSound" style={{ textDecoration: 'none' }}>
+            <Link to="/581-project2/editSound" style={{ textDecoration: 'none' }}>
                 <IonButton>Edit Sound</IonButton>
             </Link>
 
-            <Link to="/home">
+            <Link to="/581-project2/home">
                 <img src={Lock} width={100} height={100}/>
             </Link>
         </div>
