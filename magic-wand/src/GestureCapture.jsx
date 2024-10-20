@@ -1,9 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
-import './app.css';
+import { useEffect, useRef } from 'react';
 
-function App() {
-  const [status, setStatus] = useState("Waiting for a gesture...");
-  const [permissionGranted, setPermissionGranted] = useState(false); // Track permission state
+const useGestureDetection = (onGestureDetected) => {
   const path = useRef([]); // Store the motion path
   const flickThreshold = 25;
   const shapeThreshold = 3;
@@ -12,62 +9,62 @@ function App() {
   const lShapeCompletionLength = 40;
   const triangleCompletionLength = 70;
 
-  // Function to request motion permission
-  const requestMotionPermission = () => {
+  useEffect(() => {
+    const handleMotion = (event) => {
+      const { x, y, z } = event.acceleration || { x: 0, y: 0, z: 0 };
+
+      // Detect flick (sharp, fast movement)
+      const flickMagnitude = Math.abs(x) + Math.abs(y) + Math.abs(z);
+      if (flickMagnitude > flickThreshold) {
+        path.current = []; // Reset path after flick detection
+        onGestureDetected("FLICK");
+        return;
+      }
+
+      // Track smaller motions for shapes
+      if (Math.abs(x) > shapeThreshold || Math.abs(y) > shapeThreshold) {
+        path.current.push({ x, y });
+
+        // Only check for shape after the path reaches a certain length
+        if (path.current.length > minPathLength) {
+          const gesture = detectGesture(path.current);
+          if (gesture) {
+            onGestureDetected(gesture);
+            path.current = []; // Reset path after detection
+          }
+        }
+
+        // Prevent path from getting too long
+        if (path.current.length > squareCompletionLength) {
+          path.current.shift(); // Remove the oldest points
+        }
+      }
+    };
+
+    // Handle motion permissions for iOS 13+
     if (typeof DeviceMotionEvent.requestPermission === 'function') {
       DeviceMotionEvent.requestPermission()
         .then((permissionState) => {
           if (permissionState === 'granted') {
-            setPermissionGranted(true);
             window.addEventListener('devicemotion', handleMotion);
-          } else {
-            setStatus("Permission denied for motion access.");
           }
         })
-        .catch((err) => setStatus(`Error: ${err.message}`));
+        .catch((err) => console.error(`Error: ${err.message}`));
     } else {
-      // For Android and older iOS versions, no permission needed
-      setPermissionGranted(true);
+      // No permission required for Android or older iOS versions
       window.addEventListener('devicemotion', handleMotion);
     }
-  };
 
-  const handleMotion = (event) => {
-    const { x, y, z } = event.acceleration || { x: 0, y: 0, z: 0 };
-
-    // Detect flick (sharp, fast movement)
-    const flickMagnitude = Math.abs(x) + Math.abs(y) + Math.abs(z);
-    if (flickMagnitude > flickThreshold) {
-      setStatus("Flick detected!");
-      path.current = []; // Reset path after flick detection
-      return;
-    }
-
-    // Track smaller motions for shapes
-    if (Math.abs(x) > shapeThreshold || Math.abs(y) > shapeThreshold) {
-      path.current.push({ x, y });
-
-      // Only check for shape after the path reaches a certain length
-      if (path.current.length > minPathLength) {
-        const gesture = detectGesture(path.current);
-        if (gesture) {
-          setStatus(`${gesture} detected!`);
-          path.current = []; // Reset path after detection
-        }
-      }
-
-      // Prevent path from getting too long
-      if (path.current.length > squareCompletionLength) {
-        path.current.shift(); // Remove the oldest points
-      }
-    }
-  };
+    return () => {
+      window.removeEventListener('devicemotion', handleMotion);
+    };
+  }, [onGestureDetected]);
 
   // Check if the gesture is L-shape, square, or triangle
   const detectGesture = (path) => {
-    if (path.length >= lShapeCompletionLength && isLShape(path)) return "L-shape";
-    if (path.length >= squareCompletionLength && isSquare(path)) return "Square";
-    if (path.length >= triangleCompletionLength && isTriangle(path)) return "Triangle";
+    if (path.length >= lShapeCompletionLength && isLShape(path)) return "L";
+    if (path.length >= squareCompletionLength && isSquare(path)) return "SQUARE";
+    if (path.length >= triangleCompletionLength && isTriangle(path)) return "TRIANGLE";
     return null;
   };
 
@@ -139,20 +136,6 @@ function App() {
 
     return directionChanges >= 3;
   };
+};
 
-  return (
-    <div className="App">
-      <h1>Magic Wand Unlock</h1>
-      <p>Flick, draw an L-shape, square, or triangle to unlock!</p>
-      {!permissionGranted ? (
-        <button onClick={requestMotionPermission}>
-          Grant Motion Access
-        </button>
-      ) : (
-        <div className="status">{status}</div>
-      )}
-    </div>
-  );
-}
-
-export default App;
+export default useGestureDetection;

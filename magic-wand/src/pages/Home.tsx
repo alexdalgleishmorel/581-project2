@@ -3,22 +3,18 @@ import { IonButton } from '@ionic/react';
 import './Home.css';
 import { Link } from 'react-router-dom';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-
-import { useUnlockContext } from '../UnlockContext'; // Import the context
+import { useUnlockContext } from '../UnlockContext';
+import useGestureDetection from '../GestureCapture';
 
 const Home: React.FC = () => {
   const [isInSequenceDetectionState, setIsInSequenceDetectionState] = useState(false);
-  
-  // Access the unlock word from context
-  const { unlockWord, setWordMatched } = useUnlockContext();
+  const [isDetectingGesture, setIsDetectingGesture] = useState(false);
+
+  // Access the unlock word and gesture from context
+  const { unlockWord, setWordMatched, unlockGesture, setGestureMatched } = useUnlockContext();
 
   // Speech recognition hook
-  const {
-    transcript,
-    listening,
-    resetTranscript,
-    browserSupportsSpeechRecognition
-  } = useSpeechRecognition();
+  const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
 
   // Ref to track the timeout ID
   const timeoutIdRef = useRef<number | null>(null);
@@ -46,22 +42,55 @@ const Home: React.FC = () => {
     }, 5000);
   };
 
+  const waitForGesture = () => {
+    // Reset gesture matching state
+    setGestureMatched(false);
+
+    // Start detecting gesture
+    setIsDetectingGesture(true);
+    setIsInSequenceDetectionState(true);
+
+    // Stop waiting for gesture after 10 seconds if the unlock gesture is not matched
+    timeoutIdRef.current = window.setTimeout(() => {
+      setIsDetectingGesture(false);
+      setIsInSequenceDetectionState(false);
+    }, 10000);
+  };
+
+  // Handle the detected gesture
+  const handleGestureDetected = (gesture: string) => {
+    console.log(`Detected gesture: ${gesture}`);
+    if (gesture === unlockGesture) {
+      console.log("Unlock gesture detected!");
+      setGestureMatched(true);
+
+      // Stop gesture detection immediately upon match
+      setIsDetectingGesture(false);
+      setIsInSequenceDetectionState(false);
+
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
+        timeoutIdRef.current = null;
+      }
+    }
+  };
+
+  // Initialize the gesture detection hook (only when detecting gestures)
+  useGestureDetection(isDetectingGesture ? handleGestureDetected : null);
+
   useEffect(() => {
     if (transcript && isInSequenceDetectionState) {
       const wordToCheck = transcript.toLowerCase();
-      console.log(`detected sound: ${wordToCheck}`);
+      console.log(`Detected sound: ${wordToCheck}`);
       if (wordToCheck === unlockWord) {
-        // Found a match to the unlock word
         console.log("Unlock word detected!");
         setWordMatched(true);
 
-        // Clear the timeout since we found a match
         if (timeoutIdRef.current) {
           clearTimeout(timeoutIdRef.current);
           timeoutIdRef.current = null;
         }
 
-        // Stop listening and exit detection state
         SpeechRecognition.stopListening();
         setIsInSequenceDetectionState(false);
       }
@@ -75,10 +104,10 @@ const Home: React.FC = () => {
         <p className="line">A</p>
         <p className="line">Wish</p>
       </div>
-      <div className='editHome'>
+      <div className="editHome">
         {!isInSequenceDetectionState && (
           <>
-            <IonButton onClick={ waitForSound }>Unlock</IonButton>
+            <IonButton onClick={waitForSound}>Unlock</IonButton>
             <Link to="/edit" style={{ textDecoration: 'none' }}>
               <IonButton>Edit</IonButton>
             </Link>
@@ -86,7 +115,7 @@ const Home: React.FC = () => {
         )}
       </div>
 
-      <div className='body'></div>
+      <div className="body"></div>
     </div>
   );
 };
