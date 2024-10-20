@@ -1,24 +1,28 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import VoiceCapture from '../components/VoiceCapture';
+
+import { IonButton } from '@ionic/react';
 import './Home.css';
+import { Link } from 'react-router-dom';
+
 
 const Home: React.FC = () => {
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <VoiceCapture />
-      </IonContent>
-    </IonPage>
+    <div>
+      <div className="title">
+        <p className="line">Make</p>
+        <p className="line">A</p>
+        <p className="line">Wish</p>
+      </div>
+      <div className='editHome'>
+        <Link to="/edit" style={{ textDecoration: 'none' }}>
+          <IonButton>Edit</IonButton>
+        </Link>
+      </div>
+
+      
+      <div className='body'>
+        {/* Functionality to detect the sensors */}
+      </div>
+    </div>
   );
 };
 
