@@ -5,7 +5,7 @@ import './Home.css';
 
 const Home: React.FC = () => {
   return (
-    <body>
+    <div>
       <div className="title">
         <p className="line">Make</p>
         <p className="line">A</p>
@@ -18,7 +18,7 @@ const Home: React.FC = () => {
       </div>
 
 
-    </body>
+    </div>
   );
 };
 
