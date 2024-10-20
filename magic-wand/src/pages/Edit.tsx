@@ -1,10 +1,7 @@
 import './Home.css';
-import {Link} from "react-router-dom";
-import {IonButton} from '@ionic/react';
-
-
-
-
+import { Link } from "react-router-dom";
+import { IonButton } from '@ionic/react';
+import Lock from "../images/Lock.png";
 
 const Edit: React.FC = () => {
     return(
@@ -16,17 +13,17 @@ const Edit: React.FC = () => {
         </div>
 
         <div className='edit'>
-            {/* <Link to="/"><button>
-                Edit Gesture
-            </button></Link> */}
             <Link to="/editGesture" style={{ textDecoration: 'none' }}>
                 <IonButton>Edit Gesture</IonButton>
             </Link>
             
             <Link to="/editSound" style={{ textDecoration: 'none' }}>
-                <IonButton>Edit Sound  </IonButton>
+                <IonButton>Edit Sound</IonButton>
             </Link>
-        
+
+            <Link to="/home">
+                <img src={Lock} width={100} height={100}/>
+            </Link>
         </div>
 
         </div>

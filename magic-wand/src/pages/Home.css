@@ -39,10 +39,6 @@
 .line:nth-child(3){
     padding-left: 45px;
 }
-  
-
-
-
 
 .body{
 
@@ -61,7 +57,7 @@
     align-items: center;
     gap: 50px;
     flex-direction: column;
-    padding-top: 90px;
+    padding-top: 45px;
 }
 ion-button{
     --background:#ffebcd;
@@ -69,8 +65,25 @@ ion-button{
     font-size:30px;
     --padding-top: 15px;
     --padding-bottom: 15px;
+}
 
-    
-    
+.editHome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-direction: column;
+    padding-top: 30px;
+}
 
+.back{
+    padding: 15px;
+}
+
+.container {
+    --background:#ffebcd;
+    --color:black;
+    font-size:30px;
+    --padding-top: 15px;
+    --padding-bottom: 15px;
 }
