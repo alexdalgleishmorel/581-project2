@@ -16,7 +16,6 @@ const Home: React.FC = () => {
         <Link to="/edit" style={{ textDecoration: 'none' }}>
           <IonButton>Edit</IonButton>
         </Link>
-
       </div>
 
       
