@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const useGestureDetection = (onGestureDetected) => {
+const useGestureDetection = (isDetectingGesture, onGestureDetected) => {
   const path = useRef([]); // Store the motion path
   const flickThreshold = 25;
   const shapeThreshold = 3;
@@ -10,6 +10,8 @@ const useGestureDetection = (onGestureDetected) => {
   const triangleCompletionLength = 70;
 
   useEffect(() => {
+    if (!isDetectingGesture) return;
+
     const handleMotion = (event) => {
       const { x, y, z } = event.acceleration || { x: 0, y: 0, z: 0 };
 
@@ -58,9 +60,8 @@ const useGestureDetection = (onGestureDetected) => {
     return () => {
       window.removeEventListener('devicemotion', handleMotion);
     };
-  }, [onGestureDetected]);
+  }, [isDetectingGesture, onGestureDetected]);
 
-  // Check if the gesture is L-shape, square, or triangle
   const detectGesture = (path) => {
     if (path.length >= lShapeCompletionLength && isLShape(path)) return "L";
     if (path.length >= squareCompletionLength && isSquare(path)) return "SQUARE";

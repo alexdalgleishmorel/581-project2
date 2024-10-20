@@ -9,6 +9,7 @@ import useGestureDetection from '../GestureCapture';
 const Home: React.FC = () => {
   const [isInSequenceDetectionState, setIsInSequenceDetectionState] = useState(false);
   const [isDetectingGesture, setIsDetectingGesture] = useState(false);
+  const [isWaitingForSound, setIsWaitingForSound] = useState(false); // New state to track sound detection
 
   // Access the unlock word and gesture from context
   const { unlockWord, setWordMatched, unlockGesture, setGestureMatched } = useUnlockContext();
@@ -29,8 +30,9 @@ const Home: React.FC = () => {
     resetTranscript();
     setWordMatched(false);
 
-    // Enter the sequence detection state
+    // Enter the sequence detection state and start waiting for sound
     setIsInSequenceDetectionState(true);
+    setIsWaitingForSound(true);
 
     // Start listening for speech
     SpeechRecognition.startListening();
@@ -38,6 +40,7 @@ const Home: React.FC = () => {
     // Stop listening after 5 seconds if unlock word is not detected
     timeoutIdRef.current = window.setTimeout(() => {
       SpeechRecognition.stopListening();
+      setIsWaitingForSound(false);
       setIsInSequenceDetectionState(false);
     }, 5000);
   };
@@ -75,27 +78,31 @@ const Home: React.FC = () => {
     }
   };
 
-  // Initialize the gesture detection hook (only when detecting gestures)
-  useGestureDetection(isDetectingGesture ? handleGestureDetected : null);
+  // Initialize gesture detection hook, but only activate detection when isDetectingGesture is true
+  useGestureDetection(isDetectingGesture, handleGestureDetected);
 
   useEffect(() => {
-    if (transcript && isInSequenceDetectionState) {
+    if (transcript && isWaitingForSound) {
       const wordToCheck = transcript.toLowerCase();
       console.log(`Detected sound: ${wordToCheck}`);
       if (wordToCheck === unlockWord) {
         console.log("Unlock word detected!");
         setWordMatched(true);
 
+        // Stop listening to sound
+        setIsWaitingForSound(false);
+        SpeechRecognition.stopListening();
+
         if (timeoutIdRef.current) {
           clearTimeout(timeoutIdRef.current);
           timeoutIdRef.current = null;
         }
 
-        SpeechRecognition.stopListening();
-        setIsInSequenceDetectionState(false);
+        // Start gesture detection after the word is matched
+        waitForGesture();
       }
     }
-  }, [transcript, isInSequenceDetectionState, unlockWord, setWordMatched]);
+  }, [transcript, isWaitingForSound, unlockWord, setWordMatched]);
 
   return (
     <div>
@@ -115,7 +122,12 @@ const Home: React.FC = () => {
         )}
       </div>
 
-      <div className="body"></div>
+      <div className="body">
+        <div className='spellStatusMessage'>
+          {isWaitingForSound && 'Awaiting spell audio'}
+          {isDetectingGesture && 'Awaiting wand movement'}
+        </div>
+      </div>
     </div>
   );
 };
