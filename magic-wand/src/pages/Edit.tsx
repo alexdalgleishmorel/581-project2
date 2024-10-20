@@ -1,6 +1,7 @@
 import './Home.css';
 import {Link} from "react-router-dom";
 import {IonButton} from '@ionic/react';
+import Lock from "../images/Lock.png";
 
 
 
@@ -25,6 +26,11 @@ const Edit: React.FC = () => {
             
             <Link to="/editSound" style={{ textDecoration: 'none' }}>
                 <IonButton>Edit Sound  </IonButton>
+            </Link>
+
+            <Link to="/home">
+                <img src={Lock} width={100} height={100}/>
+                
             </Link>
         
         </div>

@@ -74,3 +74,16 @@ ion-button{
     
 
 }
+
+.editHome{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-direction: column;
+    padding-top: 30px;
+}
+
+.back{
+    padding: 15px;
+}

@@ -1,6 +1,7 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
+import { Link } from 'react-router-dom';
 
 
 const Home: React.FC = () => {
@@ -10,6 +11,12 @@ const Home: React.FC = () => {
         <p className="line">Make</p>
         <p className="line">A</p>
         <p className="line">Wish</p>
+      </div>
+      <div className='editHome'>
+        <Link to="/edit" style={{ textDecoration: 'none' }}>
+          <IonButton>Edit</IonButton>
+        </Link>
+
       </div>
 
       
