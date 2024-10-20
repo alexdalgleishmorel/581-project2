@@ -1,11 +1,7 @@
 import './Home.css';
-import {Link} from "react-router-dom";
-import {IonButton} from '@ionic/react';
+import { Link } from "react-router-dom";
+import { IonButton } from '@ionic/react';
 import Lock from "../images/Lock.png";
-
-
-
-
 
 const Edit: React.FC = () => {
     return(

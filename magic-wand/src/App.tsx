@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Edit from './pages/Edit';
 import EditSound from './pages/editSound';
 import EditGesture from './pages/editGesture';
-
+import { UnlockProvider } from './UnlockContext';
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -41,30 +41,30 @@ import './theme/variables.css';
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-        <Route exact path="/edit">
-          <Edit/>
-        </Route>
-        <Route exact path="/editGesture">
-          <EditGesture/>
-        </Route>
+  <UnlockProvider>
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route exact path="/home">
+            <Home />
+          </Route>
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+          <Route exact path="/edit">
+            <Edit/>
+          </Route>
+          <Route exact path="/editGesture">
+            <EditGesture/>
+          </Route>
 
-        <Route exact path="/editSound">
-          <EditSound/>
-        </Route>
-
-        
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+          <Route exact path="/editSound">
+            <EditSound/>
+          </Route>
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  </UnlockProvider>
 );
 
 export default App;

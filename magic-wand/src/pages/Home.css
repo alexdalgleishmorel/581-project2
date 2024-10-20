@@ -69,13 +69,9 @@ ion-button{
     font-size:30px;
     --padding-top: 15px;
     --padding-bottom: 15px;
-
-    
-    
-
 }
 
-.editHome{
+.editHome {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,4 +82,12 @@ ion-button{
 
 .back{
     padding: 15px;
+}
+
+.container {
+    --background:#ffebcd;
+    --color:black;
+    font-size:30px;
+    --padding-top: 15px;
+    --padding-bottom: 15px;
 }
