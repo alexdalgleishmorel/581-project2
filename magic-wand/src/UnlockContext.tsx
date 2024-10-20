@@ -17,7 +17,7 @@ const UnlockContext = createContext<UnlockContextType | undefined>(undefined);
 
 export const UnlockProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [supportedGestures] = useState<string[]>(['flick', 'triangle']);
-  const [supportedWords] = useState<string[]>(['apples', 'orbit', 'nebula', 'vortex', 'tundra', 'falcon']);
+  const [supportedWords] = useState<string[]>(['apples', 'ocean', 'nebula', 'vortex', 'tundra', 'falcon']);
 
   const [unlockGesture, setUnlockGesture] = useState<string>(supportedGestures[0]);
   const [gestureMatched, setGestureMatched] = useState<boolean>(false);
