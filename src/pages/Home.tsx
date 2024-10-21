@@ -3,6 +3,7 @@ import { IonButton } from '@ionic/react';
 import './Home.css';
 import { Link } from 'react-router-dom';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
 import { useUnlockContext } from '../UnlockContext';
 import useGestureDetection from '../GestureCapture';
 
@@ -12,7 +13,7 @@ const Home: React.FC = () => {
   const [isWaitingForSound, setIsWaitingForSound] = useState(false); // New state to track sound detection
 
   // Access the unlock word and gesture from context
-  const { unlockWord, setWordMatched, unlockGesture, setGestureMatched } = useUnlockContext();
+  const { unlockWord, setWordMatched, wordMatched, unlockGesture, setGestureMatched, gestureMatched } = useUnlockContext();
 
   // Speech recognition hook
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
@@ -112,7 +113,7 @@ const Home: React.FC = () => {
         <p className="line">Wish</p>
       </div>
       <div className="editHome">
-        {!isInSequenceDetectionState && (
+        {(!isInSequenceDetectionState && !(wordMatched && gestureMatched)) && (
           <>
             <IonButton onClick={waitForSound}>Unlock</IonButton>
             <Link to="/edit" style={{ textDecoration: 'none' }}>
@@ -126,6 +127,16 @@ const Home: React.FC = () => {
         <div className='spellStatusMessage'>
           {isWaitingForSound && 'Awaiting spell audio'}
           {isDetectingGesture && 'Awaiting wand movement'}
+          {(wordMatched && gestureMatched) && (
+            <>
+              <h1>
+                UNLOCK SUCCESS
+              </h1>
+            </>
+          )}
+          <Link to="/edit" style={{ textDecoration: 'none' }}>
+            <IonButton>Edit</IonButton>
+          </Link>
         </div>
       </div>
     </div>
