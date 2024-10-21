@@ -132,11 +132,11 @@ const Home: React.FC = () => {
               <h1>
                 UNLOCK SUCCESS
               </h1>
+              <Link to="/edit" style={{ textDecoration: 'none' }}>
+                <IonButton onClick={() => { setWordMatched(false); setGestureMatched(false); } }>Edit</IonButton>
+              </Link>
             </>
           )}
-          <Link to="/edit" style={{ textDecoration: 'none' }}>
-            <IonButton>Edit</IonButton>
-          </Link>
         </div>
       </div>
     </div>
