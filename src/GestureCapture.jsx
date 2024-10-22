@@ -9,25 +9,6 @@ const useGestureDetection = (isDetectingGesture, onGestureDetected) => {
   const lShapeCompletionLength = 40;
   const triangleCompletionLength = 70;
 
-  // Function to request permission
-  const requestPermission = async () => {
-    if (typeof DeviceMotionEvent.requestPermission === 'function') {
-      try {
-        const permissionState = await DeviceMotionEvent.requestPermission();
-        if (permissionState === 'granted') {
-          return true;
-        } else {
-          console.error("Permission denied for motion access.");
-          return false;
-        }
-      } catch (err) {
-        console.error(`Error: ${err.message}`);
-        return false;
-      }
-    }
-    return true; // No permission required for Android or older iOS versions
-  };
-
   useEffect(() => {
     if (!isDetectingGesture) return;
 
@@ -62,7 +43,19 @@ const useGestureDetection = (isDetectingGesture, onGestureDetected) => {
       }
     };
 
-    window.addEventListener('devicemotion', handleMotion);
+    // Handle motion permissions for iOS 13+
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      DeviceMotionEvent.requestPermission()
+        .then((permissionState) => {
+          if (permissionState === 'granted') {
+            window.addEventListener('devicemotion', handleMotion);
+          }
+        })
+        .catch((err) => console.error(`Error: ${err.message}`));
+    } else {
+      // No permission required for Android or older iOS versions
+      window.addEventListener('devicemotion', handleMotion);
+    }
 
     return () => {
       window.removeEventListener('devicemotion', handleMotion);
@@ -143,10 +136,6 @@ const useGestureDetection = (isDetectingGesture, onGestureDetected) => {
     }
 
     return directionChanges >= 3;
-  };
-
-  return {
-    requestPermission
   };
 };
 
