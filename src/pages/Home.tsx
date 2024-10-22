@@ -118,9 +118,9 @@ const Home: React.FC = () => {
         {(!isInSequenceDetectionState && !(wordMatched && gestureMatched)) && (
           <>
             <IonButton onClick={waitForSound}>Unlock</IonButton>
-            <Link to="/edit" style={{ textDecoration: 'none' }}>
+            {/* <Link to="/edit" style={{ textDecoration: 'none' }}>
               <IonButton>Edit</IonButton>
-            </Link>
+            </Link> */}
           </>
         )}
       </div>
