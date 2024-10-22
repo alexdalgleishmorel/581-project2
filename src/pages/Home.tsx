@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 import { useUnlockContext } from '../UnlockContext';
-import useGestureDetection from '../GestureCapture';
+import useGestureDetection from '../GestureCapture'; // Updated hook
 
 import wand from "../images/magic-wand-just-beyond.gif";
 
@@ -22,6 +22,26 @@ const Home: React.FC = () => {
 
   // Ref to track the timeout ID
   const timeoutIdRef = useRef<number | null>(null);
+
+  // Handle the detected gesture
+  const handleGestureDetected = (gesture: string) => {
+    console.log(`Detected gesture: ${gesture}`);
+    if (gesture === unlockGesture) {
+      console.log("Unlock gesture detected!");
+      setGestureMatched(true);
+
+      // Stop gesture detection immediately upon match
+      setIsDetectingGesture(false);
+      setIsInSequenceDetectionState(false);
+
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
+        timeoutIdRef.current = null;
+      }
+    }
+  };
+
+  const { requestPermission } = useGestureDetection(isDetectingGesture, handleGestureDetected);
 
   const waitForSound = () => {
     if (!browserSupportsSpeechRecognition) {
@@ -48,9 +68,16 @@ const Home: React.FC = () => {
     }, 5000);
   };
 
-  const waitForGesture = () => {
+  const waitForGesture = async () => {
     // Reset gesture matching state
     setGestureMatched(false);
+
+    // Request permission before detecting gestures
+    const permissionGranted = await requestPermission();
+    if (!permissionGranted) {
+      console.error('Motion permission not granted.');
+      return;
+    }
 
     // Start detecting gesture
     setIsDetectingGesture(true);
@@ -62,27 +89,6 @@ const Home: React.FC = () => {
       setIsInSequenceDetectionState(false);
     }, 10000);
   };
-
-  // Handle the detected gesture
-  const handleGestureDetected = (gesture: string) => {
-    console.log(`Detected gesture: ${gesture}`);
-    if (gesture === unlockGesture) {
-      console.log("Unlock gesture detected!");
-      setGestureMatched(true);
-
-      // Stop gesture detection immediately upon match
-      setIsDetectingGesture(false);
-      setIsInSequenceDetectionState(false);
-
-      if (timeoutIdRef.current) {
-        clearTimeout(timeoutIdRef.current);
-        timeoutIdRef.current = null;
-      }
-    }
-  };
-
-  // Initialize gesture detection hook, but only activate detection when isDetectingGesture is true
-  useGestureDetection(isDetectingGesture, handleGestureDetected);
 
   useEffect(() => {
     if (transcript && isWaitingForSound) {
@@ -131,18 +137,15 @@ const Home: React.FC = () => {
           {isDetectingGesture && 'Awaiting wand movement'}
           {(wordMatched && gestureMatched) && (
             <>
-              <h1>
-                UNLOCK SUCCESS
-              </h1>
+              <h1>UNLOCK SUCCESS</h1>
               <Link to="/edit" style={{ textDecoration: 'none' }}>
-                <IonButton onClick={() => { setWordMatched(false); setGestureMatched(false); } }>Edit</IonButton>
+                <IonButton onClick={() => { setWordMatched(false); setGestureMatched(false); }}>Edit</IonButton>
               </Link>
             </>
           )}
         </div>
         <div className='box'>
-          <img src={wand}/>
-
+          <img src={wand} alt="magic wand"/>
         </div>
       </div>
     </div>
