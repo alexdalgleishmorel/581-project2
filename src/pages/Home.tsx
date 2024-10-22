@@ -7,6 +7,8 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import { useUnlockContext } from '../UnlockContext';
 import useGestureDetection from '../GestureCapture';
 
+import wand from "../images/magic-wand-just-beyond.gif";
+
 const Home: React.FC = () => {
   const [isInSequenceDetectionState, setIsInSequenceDetectionState] = useState(false);
   const [isDetectingGesture, setIsDetectingGesture] = useState(false);
@@ -137,6 +139,10 @@ const Home: React.FC = () => {
               </Link>
             </>
           )}
+        </div>
+        <div className='box'>
+          <img src={wand}/>
+
         </div>
       </div>
     </div>
