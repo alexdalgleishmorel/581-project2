@@ -3,10 +3,9 @@
 
 ## Setup
 
-> Ensure you have both Node.js and npm installed on your machine.
+> Ensure you have both Node.js and npm installed on your machine. Then at the root of the repository, run:
 
 ```
-cd magic-wand
 npm install
 ionic serve
 ```
@@ -19,3 +18,7 @@ ionic serve
 npm run build
 npm run deploy
 ```
+
+## Notes
+
+- For the gestures, if you are looking for more reliable results, we recommend using either `FLICK` or `TRIANGLE`.
