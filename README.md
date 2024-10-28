@@ -1,6 +1,10 @@
 # 581-project2
 #### By Alex Dalgleish-Morel, Hera Naeem and Tahamina Chowdhury
 
+## ***Important Note***
+
+***The default audio queue is `apples` and the default motion is a `flick` of the device.***
+
 ## Setup
 
 > Ensure you have both Node.js and npm installed on your machine. Then at the root of the repository, run:
